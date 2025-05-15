@@ -7,8 +7,10 @@ use Inertia\Inertia;
 
 Route::group([], function() {
     Route::get('/', fn() => Inertia::render('welcome'))->name('home');
+    Route::get('catalogue', [ProductController::class, "index"])->name("catalog");
     Route::get('product/{id}', [ProductController::class, 'show'])->name('product');
     Route::get('panier', [OrderController::class, 'index'])->name('order');
+
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
