@@ -95,7 +95,7 @@ export default function EnchantedCatalog() {
   return (
     <div>
       {/* Barre de recherche et filtres */}
-      <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-md mb-8">
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-md mb-8">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="relative flex-grow">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
@@ -140,15 +140,12 @@ export default function EnchantedCatalog() {
           </div>
         </div>
       </div>
-
       {/* Bannière promotionnelle principale */}
-      {activeTab !== "promotions" && promotionProducts.length > 0 && (
-        <PromotionBanner
-          title="Offre Spéciale Weekend!"
-          description="30% de réduction sur tous les objets magiques"
-          endDate="2025-05-17"
-        />
-      )}
+      <PromotionBanner
+        title="Offre Spéciale Weekend!"
+        description="30% de réduction sur tous les objets magiques"
+        endDate="2025-05-17"
+      />
 
       {/* Onglets de filtrage */}
       <Tabs defaultValue="all" className="mb-8" onValueChange={setActiveTab}>

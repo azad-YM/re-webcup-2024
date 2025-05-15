@@ -20,17 +20,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr">
-      <body >
-        <CartProvider>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <div className="flex-grow">{children}</div>
-            <Footer />
-          </div>
-          <Toaster />
-        </CartProvider>
-      </body>
-    </html>
+    <CartProvider>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <div className="flex-grow">{children}</div>
+        <Footer />
+      </div>
+      <Toaster />
+    </CartProvider>
   )
 }

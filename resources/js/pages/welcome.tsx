@@ -11,7 +11,7 @@ const { auth } = usePage<SharedData>().props;
   return <RootLayout>
     <main className="min-h-screen relative overflow-hidden">
       {/* Introduction avec le livre magique animé */}
-      <MagicBookIntro />
+      {/* <MagicBookIntro /> */}
 
       {/* Section du catalogue */}
       <div id="catalog-section" className="relative">
@@ -30,7 +30,7 @@ const { auth } = usePage<SharedData>().props;
               <Sparkles className="absolute -top-4 -right-8 h-8 w-8 text-amber-500 animate-pulse" />
               <Sparkles className="absolute -bottom-2 -left-8 h-6 w-6 text-purple-500 animate-pulse" />
             </div>
-            <p className="text-lg text-purple-700 max-w-2xl mx-auto">
+            <p className="text-lg text-purple-700 max-w-2xl mx-auto mt-6">
               Découvrez notre collection d'objets magiques d'occasion, soigneusement sélectionnés pour leur authenticité
               et leur pouvoir.
             </p>
