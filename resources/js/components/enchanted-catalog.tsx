@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Search, Filter, SlidersHorizontal, Sparkles, Flame, Clock } from "lucide-react"
 import { products } from "@/lib/data"
 import ProductCard from "@/components/product-card"
-import PromotionBanner from "@/components/promotion-banner"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
@@ -140,12 +139,6 @@ export default function EnchantedCatalog() {
           </div>
         </div>
       </div>
-      {/* Bannière promotionnelle principale */}
-      <PromotionBanner
-        title="Offre Spéciale Weekend!"
-        description="30% de réduction sur tous les objets magiques"
-        endDate="2025-05-17"
-      />
 
       {/* Onglets de filtrage */}
       <Tabs defaultValue="all" className="mb-8" onValueChange={setActiveTab}>
@@ -219,7 +212,7 @@ export default function EnchantedCatalog() {
                       transition={{ duration: 0.3 }}
                       className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-5 mt-6"
                     >
-                      {currentPageProducts.map((product, index) => (
+                      {products.map((product, index) => (
                         <motion.div
                           key={product.id}
                           initial={{ opacity: 0, y: 20 }}
@@ -236,13 +229,13 @@ export default function EnchantedCatalog() {
                     </motion.div>
                   </AnimatePresence>
 
-                  {/* Pagination */}
+                  {/* //Pagination
                   <Pagination
                     currentPage={currentPage}
                     totalPages={totalPages}
                     onPageChange={handlePageChange}
                     className="mt-10"
-                  />
+                  /> */}
                 </div>
               )}
 

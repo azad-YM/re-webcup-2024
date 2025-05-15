@@ -13,10 +13,10 @@ export default function Navbar() {
 
   const navItems = [
     { name: "Accueil", href: "/" },
-    { name: "Catalogue", href: "/catalogue" },
-    { name: "Catégories", href: "/categories" },
-    { name: "Nouveautés", href: "/nouveautes" },
-    { name: "À propos", href: "/a-propos" },
+    // { name: "Catalogue", href: "/catalogue" },
+    // { name: "Catégories", href: "/categories" },
+    // { name: "Nouveautés", href: "/nouveautes" },
+    // { name: "À propos", href: "/a-propos" },
     { name: "Contact", href: "/contact" },
   ]
 
@@ -24,10 +24,10 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-100 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <a href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <Sparkles className="h-6 w-6 text-amber-500" />
             <span className="font-bold text-xl text-purple-900">Objets Enchantés</span>
-          </a>
+          </Link>
 
           {/* Navigation desktop */}
           <nav className="hidden md:flex items-center space-x-6">

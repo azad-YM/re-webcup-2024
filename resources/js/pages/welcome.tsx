@@ -1,13 +1,14 @@
 import EnchantedCatalog from '@/components/enchanted-catalog';
 import MagicBackground from '@/components/magic-background';
 import MagicBookIntro from '@/components/magic-book-intro';
+import PromotionBanner from '@/components/promotion-banner';
 import RootLayout from '@/layouts/app/app';
 import { type SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { Sparkles } from 'lucide-react';
 
 export default function Welcome() {
-const { auth } = usePage<SharedData>().props;
+  const { auth } = usePage<SharedData>().props;
   return <RootLayout>
     <main className="min-h-screen relative overflow-hidden">
       {/* Introduction avec le livre magique animé */}
@@ -35,6 +36,13 @@ const { auth } = usePage<SharedData>().props;
               et leur pouvoir.
             </p>
           </header>
+
+          {/* Bannière promotionnelle principale */}
+          <PromotionBanner
+            title="Offre Spéciale Weekend!"
+            description="30% de réduction sur tous les objets magiques"
+            endDate="2025-05-17"
+          />
 
           <EnchantedCatalog />
         </div>

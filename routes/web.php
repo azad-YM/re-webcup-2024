@@ -1,11 +1,15 @@
 <?php
 
+use App\Http\Controllers\Product\ProductController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('welcome');
-})->name('home');
+Route::group([], function() {
+    Route::get('/', function () {
+        return Inertia::render('welcome');
+    })->name('home');
+    Route::get('product/{id}', [ProductController::class, 'show']);
+});
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {

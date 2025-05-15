@@ -36,7 +36,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const finalPrice = product.discount > 0 ? (product.price * (100 - product.discount)) / 100 : product.price
 
   return (
-    <Link href={`/produit/${product.id}`} className="block h-full">
+    <Link href={`/product/${product.id}`} className="block h-full">
       <motion.div
         className="bg-white/90 backdrop-blur-sm rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 relative h-full flex flex-col"
         onHoverStart={() => setIsHovered(true)}
