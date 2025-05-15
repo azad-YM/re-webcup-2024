@@ -54,18 +54,18 @@ export default function SearchHero() {
 
   // Navigation vers la page produit
   const handleProductClick = (productId: string) => {
-    router.push({url: `/produit/${productId}`})
+    router.get(`/product/${productId}`)
   }
 
   // Navigation vers la page catalogue avec filtre de catégorie
   const handleCategoryClick = (category: string) => {
-    router.push({url: `/catalogue?category=${encodeURIComponent(category)}`})
+    router.get(`/catalogue?category=${encodeURIComponent(category)}`)
   }
 
   // Navigation vers la page catalogue avec la recherche
   const handleSearch = () => {
     if (query.trim()) {
-      router.push({url: `/catalogue?search=${encodeURIComponent(query)}`})
+      router.get(`/catalogue?search=${encodeURIComponent(query)}`)
     }
   }
 

@@ -6,19 +6,21 @@ import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { products } from "@/lib/data"
 import { useMobile } from "@/hooks/use-mobile"
+import { Product } from "@/lib/types"
+import { Link } from "@inertiajs/react"
 
 // Sélectionner les produits magiques de niveau 4 et 5
-const magicalProducts = products
-  .filter((product) => product.magicLevel >= 4)
-  .map((product) => ({
-    id: product.id,
-    name: product.name,
-    description: product.description,
-    image: product.image,
-    magicLevel: product.magicLevel,
-  }))
+// const magicalProducts = products
+//   .filter((product) => product.magicLevel >= 4)
+//   .map((product) => ({
+//     id: product.id,
+//     name: product.name,
+//     description: product.description,
+//     image: product.image,
+//     magicLevel: product.magicLevel,
+//   }))
 
-export default function MagicCarousel() {
+export default function MagicCarousel({products}: {products: Product[]}) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [direction, setDirection] = useState(0)
   const isMobile = useMobile()
@@ -27,7 +29,7 @@ export default function MagicCarousel() {
     // Auto-rotation du carrousel
     const interval = setInterval(() => {
       setDirection(1)
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % magicalProducts.length)
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length)
     }, 5000)
 
     return () => clearInterval(interval)
@@ -35,15 +37,15 @@ export default function MagicCarousel() {
 
   const nextSlide = () => {
     setDirection(1)
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % magicalProducts.length)
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length)
   }
 
   const prevSlide = () => {
     setDirection(-1)
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + magicalProducts.length) % magicalProducts.length)
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length)
   }
 
-  const currentProduct = magicalProducts[currentIndex]
+  const currentProduct = products[currentIndex]
 
   const variants = {
     enter: (direction: number) => ({
@@ -62,7 +64,7 @@ export default function MagicCarousel() {
 
   return (
     <motion.div
-      className="relative overflow-hidden rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg"
+      className="relative overflow-hidden rounded-xl bg-gradient-to-r from-emerald-500 via-emerald-500 to-pink-300 text-white shadow-lg"
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
@@ -134,7 +136,7 @@ export default function MagicCarousel() {
               x: { type: "spring", stiffness: 300, damping: 30 },
               opacity: { duration: 0.2 },
             }}
-            className="absolute inset-0 flex flex-col md:flex-row items-center justify-between p-6 md:p-10"
+            className="absolute inset-0 flex flex-col md:flex-row items-center justify-between p-6 md:py-10 md:px-20"
           >
             <div className="text-center md:text-left mb-4 md:mb-0 md:max-w-md">
               <h3 className="text-2xl md:text-3xl font-bold mb-2 flex items-center justify-center md:justify-start">
@@ -142,12 +144,14 @@ export default function MagicCarousel() {
                 {currentProduct.name}
               </h3>
               <p className="text-white/90 mb-6">{currentProduct.description}</p>
-              <Button
-                className="bg-white text-purple-700 hover:bg-white/90 hover:text-purple-800"
-                size={isMobile ? "default" : "lg"}
-              >
-                Découvrir cet objet
-              </Button>
+              <Link href={`/product/${currentProduct.id}`}>
+                <Button
+                  className="bg-white text-purple-700 hover:bg-white/90 hover:text-purple-800"
+                  size={isMobile ? "default" : "lg"}
+                >
+                  Découvrir cet objet
+                </Button>
+              </Link>
             </div>
 
             <div className="relative w-40 h-40 md:w-56 md:h-56">
@@ -212,7 +216,7 @@ export default function MagicCarousel() {
 
       {/* Pagination dots */}
       <div className="flex justify-center p-4 gap-1">
-        {magicalProducts.map((_, i) => (
+        {products.map((_, i) => (
           <button
             key={i}
             className={`w-2 h-2 rounded-full transition-all ${i === currentIndex ? "bg-white w-4" : "bg-white/50"}`}
