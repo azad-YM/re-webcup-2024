@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { toast } from "sonner"
 import { Link } from "@inertiajs/react"
+import { useCart } from "./cart-provider"
 
 interface ProductCardProps {
   product: Product
@@ -17,9 +18,12 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+    const { addToCart } = useCart()
+  
 
-  const addToCart = (e: React.MouseEvent) => {
+  const onAddToCart = (e: React.MouseEvent) => {
     e.preventDefault() // Empêcher la navigation lors du clic sur le bouton
+    addToCart(product)
     toast("Produit ajouté au panier", {
       description: `${product.name} a été ajouté à votre panier`,
     })
@@ -132,7 +136,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <Heart className="h-4 w-4" />
               </Button>
               <Button
-                onClick={addToCart}
+                onClick={onAddToCart}
                 className="rounded-full bg-purple-600 hover:bg-purple-700 text-xs text-white"
                 size="sm"
               >

@@ -9,3 +9,8 @@ export interface Product {
   isNew: boolean
   magicLevel: number // 1-5, 5 being the most magical
 }
+
+export interface CartItem {
+  product: Product
+  quantity: number
+}

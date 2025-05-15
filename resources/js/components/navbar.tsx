@@ -6,10 +6,11 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import { Link } from "@inertiajs/react"
+import { useCart } from "./cart-provider"
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const cartCount = 3 // Exemple de nombre d'articles dans le panier
+  const { totalItems } = useCart()
 
   const navItems = [
     { name: "Accueil", href: "/" },
@@ -32,22 +33,28 @@ export default function Navbar() {
           {/* Navigation desktop */}
           <nav className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
-              <a key={item.name} href={item.href} className="text-gray-600 hover:text-purple-700 transition-colors">
+              <Link key={item.name} href={item.href} className="text-gray-600 hover:text-purple-700 transition-colors">
                 {item.name}
-              </a>
+              </Link>
             ))}
           </nav>
+
           <div className="flex items-center gap-2">
             <Button variant="ghost" size="icon" className="hidden md:flex">
               <Heart className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="relative">
-              <ShoppingCart className="h-5 w-5" />
-              {cartCount > 0 && (
-                <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center bg-purple-600">
-                  {cartCount}
-                </Badge>
-              )}
+            <Button variant="ghost" size="icon" className="relative" asChild>
+              <Link href="/panier">
+                <ShoppingCart className="h-5 w-5" />
+                {totalItems > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center bg-purple-600">
+                    {totalItems}
+                  </Badge>
+                )}
+              </Link>
+            </Button>
+            <Button variant="ghost" size="icon" className="hidden md:flex">
+              <User className="h-5 w-5" />
             </Button>
 
             {/* Menu mobile */}
@@ -59,7 +66,7 @@ export default function Navbar() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[80vw] sm:w-[350px]">
                 <div className="flex flex-col h-full">
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between my-4 px-3">
                     <div className="flex items-center gap-2">
                       <Sparkles className="h-5 w-5 text-amber-500" />
                       <span className="font-bold text-lg">Objets Enchantés</span>
@@ -69,52 +76,40 @@ export default function Navbar() {
                     </Button>
                   </div>
 
-                  <nav className="flex flex-col space-y-4">
+                  <nav className="flex flex-col gap-2 px-4">
                     {navItems.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
-                        className="text-gray-600 hover:text-purple-700 transition-colors py-2"
+                        className="text-gray-600 hover:text-purple-700 py-1 transition-colors"
                         onClick={() => setIsOpen(false)}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </nav>
 
-                  <div className="mt-auto pt-6 border-t border-gray-100">
-                    <div className="flex flex-col gap-3">
-                      <Button variant="outline" className="justify-start">
-                        <User className="h-4 w-4 mr-2" />
-                        Mon compte
-                      </Button>
+                  <div className="mt-auto p-4 border-t border-gray-100">
+                    <div className="flex flex-col gap-2">
                       <Button variant="outline" className="justify-start">
                         <Heart className="h-4 w-4 mr-2" />
                         Mes favoris
                       </Button>
-                      <Button className="bg-purple-600 hover:bg-purple-700">
-                        <ShoppingCart className="h-4 w-4 mr-2" />
-                        Voir mon panier ({cartCount})
+                      <Button className="bg-purple-600 hover:bg-purple-700" asChild>
+                        <Link href="/panier" onClick={() => setIsOpen(false)}>
+                          <ShoppingCart className="h-4 w-4 mr-2" />
+                          Voir mon panier ({totalItems})
+                        </Link>
+                      </Button>
+                      <Button variant="outline" className="justify-start">
+                        <User className="h-4 w-4 mr-2" />
+                        Mon compte
                       </Button>
                     </div>
                   </div>
                 </div>
               </SheetContent>
             </Sheet>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link
-              href={route('login')}
-              className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
-            >
-              Log in
-            </Link>
-            <Link
-              href={route('register')}
-              className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
-            >
-              Register
-            </Link>
           </div>
         </div>
       </div>
