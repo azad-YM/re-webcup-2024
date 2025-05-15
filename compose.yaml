@@ -1,0 +1,23 @@
+
+services:
+###> doctrine/doctrine-bundle ###
+  database:
+    image: mariadb:latest
+    environment:
+      MYSQL_DB: ${MYSQL_DB:-laravel}
+      MYSQL_ROOT_PASSWORD: "webcup-2024"
+      # You should definitely change the password in production
+      # MYSQL_USER: ${MYSQL_USER:-kinuink}
+      # MYSQL_PASSWORD: ${MYSQL_PASSWORD:-kinuink-1919}
+    ports:
+      - "3306:3306"
+    volumes:
+      - database_data:/var/lib/mysql/data
+      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./docker/db/data:/var/lib/postgresql/data:rw
+###< doctrine/doctrine-bundle ###
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  database_data:
+###< doctrine/doctrine-bundle ###
