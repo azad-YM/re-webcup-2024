@@ -2,6 +2,7 @@ import EnchantedCatalog from '@/components/enchanted-catalog';
 import MagicBackground from '@/components/magic-background';
 import MagicBookIntro from '@/components/magic-book-intro';
 import PromotionBanner from '@/components/promotion-banner';
+import SearchHero from '@/components/search/search-hero';
 import RootLayout from '@/layouts/app/app';
 import { type SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
@@ -43,8 +44,12 @@ export default function Welcome() {
             description="30% de réduction sur tous les objets magiques"
             endDate="2025-05-17"
           />
+          {/* Barre de recherche avec suggestions */}
+          <SearchHero />
 
-          <EnchantedCatalog />
+          {/* <EnchantedCatalog /> */}
+
+
         </div>
       </div>
     </main>
