@@ -1,10 +1,10 @@
-import CategoryShowcase from '@/components/category-showcase';
 import MagicBackground from '@/components/magic-background';
 import MagicBookIntro from '@/components/magic-book-intro';
-import FeaturedProducts from '@/components/product/featured-product';
 import PromotionBanner from '@/components/promotion-banner';
-import SearchHero from '@/components/search/search-hero';
 import RootLayout from '@/layouts/app/app';
+import CategoryShowcaseSection from '@/sections/category-showcase/category-showcase.section';
+import FeaturedProductsSection from '@/sections/featured-products/featured-products.section';
+import SearchHeroSection from '@/sections/search-hero/search-hero.section';
 import { type SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { Sparkles } from 'lucide-react';
@@ -38,8 +38,9 @@ export default function Welcome() {
               et leur pouvoir.
             </p>
           </header>
+
           {/* Barre de recherche avec suggestions */}
-          <SearchHero />
+          <SearchHeroSection />
 
           {/* Bannière promotionnelle principale */}
           <PromotionBanner
@@ -47,14 +48,12 @@ export default function Welcome() {
             description="30% de réduction sur tous les objets magiques"
             endDate="2025-05-17"
           />
-          {/* <EnchantedCatalog /> */}
-
 
           {/* Produits en vedette */}
-          <FeaturedProducts />
-          
+          <FeaturedProductsSection />
+
           {/* Présentation des catégories */}
-          <CategoryShowcase />
+          <CategoryShowcaseSection />
         </div>
       </div>
     </main>

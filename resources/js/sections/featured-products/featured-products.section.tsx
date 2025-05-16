@@ -5,28 +5,13 @@ import { motion } from "framer-motion"
 import { Sparkles } from "lucide-react"
 import { products } from "@/lib/data"
 import ProductCarousel from "@/components/product-carousel"
-import MagicCarousel from "../magic-carousel"
+import MagicCarousel from "@/components/magic-carousel"
+import { useFeaturedProducts } from "./featured-products.hook"
 
-export default function FeaturedProducts() {
-  const [mounted, setMounted] = useState(false)
+export default function FeaturedProductsSection() {
+  const presenter = useFeaturedProducts()
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
-
-  // Sélectionner les produits en promotion
-  const promotionProducts = products.filter((product) => product.discount > 0).slice(0, 8)
-
-  // Sélectionner les produits puissants
-  const powerfulProducts = products
-    .filter((product) => product.magicLevel >= 4)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 8)
-
-  // Sélectionner les nouveaux produits
-  const newProducts = products.filter((product) => product.isNew).slice(0, 8)
+  if (!presenter.mounted) return null
 
   return (
     <div className="space-y-16 mb-16">
@@ -51,7 +36,7 @@ export default function FeaturedProducts() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900">Offres Spéciales</h2>
         </div>
-        <ProductCarousel products={promotionProducts} />
+        <ProductCarousel products={presenter.promotionProducts} />
       </motion.section>
 
       {/* Objets puissants */}
@@ -66,7 +51,7 @@ export default function FeaturedProducts() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900">Objets Puissants</h2>
         </div>
-        <ProductCarousel products={powerfulProducts} />
+        <ProductCarousel products={presenter.powerfulProducts} />
       </motion.section>
 
       {/* Nouveautés */}      
@@ -95,10 +80,8 @@ export default function FeaturedProducts() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900">Nouveautés</h2>
         </div>
-        
-        <MagicCarousel products={newProducts} />
 
-        {/* <ProductCarousel products={newProducts} /> */}
+        <MagicCarousel products={presenter.newProducts} />
       </motion.section>
     </div>
   )
