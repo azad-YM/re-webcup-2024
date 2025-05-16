@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react"
 import { useCart } from "@/components/cart-provider"
 import { products } from "@/lib/data"
 import { Product } from "@/lib/types"
-import { useEffect, useState } from "react"
+import { toast } from "sonner"
 
 export const useFeaturedProducts = () => {
   const [mounted, setMounted] = useState(false)
@@ -23,11 +24,18 @@ export const useFeaturedProducts = () => {
     setMounted(true)
   }, [])
 
+  const handleAddToCart = (product: Product) => {
+    addToCart(product)
+    toast("Produit ajouté au panier", {
+      description: `${product.name} a été ajouté à votre panier`,
+    })
+  }
+
   return {
     mounted,
     promotionProducts,
     powerfulProducts,
     newProducts,
-    addToCart
+    handleAddToCart
   }
 }

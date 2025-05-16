@@ -1,11 +1,10 @@
-import ProductDetail from '@/components/product-detail';
+import { usePage } from '@inertiajs/react';
 import ProductReviews from '@/components/product-reviews';
-import RelatedProducts from '@/components/related-products';
 import RootLayout from '@/layouts/app/app';
 import { products } from '@/lib/data';
 import ProductDetailSection from '@/sections/product-detail/product-detail.section';
 import { type SharedData } from '@/types';
-import { usePage } from '@inertiajs/react';
+import RelatedProductsSection from '@/sections/related-products/related-products.section';
 
 export default function Show({productId}: {productId: number}) {
   const { auth } = usePage<SharedData>().props;
@@ -16,14 +15,6 @@ export default function Show({productId}: {productId: number}) {
       Not found
     </div>
   }
-
-  // Trouver des produits similaires (même catégorie ou niveau de magie similaire)
-  const relatedProducts = products
-    .filter(
-      (p) =>
-        p.id !== product.id && (p.category === product.category || Math.abs(p.magicLevel - product.magicLevel) <= 1),
-    )
-    .slice(0, 4)
 
   return (
     <RootLayout>
@@ -37,7 +28,7 @@ export default function Show({productId}: {productId: number}) {
                 <span className="absolute -bottom-1 left-0 right-0 h-1 bg-amber-400 rounded-full"></span>
               </span>
             </h2>
-            <RelatedProducts products={relatedProducts} />
+            <RelatedProductsSection productId={product.id} />
           </div>
 
           <div className="mt-20">

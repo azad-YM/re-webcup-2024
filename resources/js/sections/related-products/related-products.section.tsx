@@ -3,22 +3,24 @@
 import { motion } from "framer-motion"
 import { ChevronRight } from "lucide-react"
 import ProductCard from "@/components/product-card"
-import type { Product } from "@/lib/types"
 import { Link } from "@inertiajs/react"
+import { useRelatedProduct } from "./related-products.hook"
 
 interface RelatedProductsProps {
-  products: Product[]
+  productId: string|number
 }
 
-export default function RelatedProducts({ products }: RelatedProductsProps) {
-  if (products.length === 0) {
+export default function RelatedProductsSection({ productId }: RelatedProductsProps) {
+  const presenter = useRelatedProduct(productId)
+
+  if (presenter.relatedProducts.length === 0) {
     return null
   }
 
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product, index) => (
+        {presenter.relatedProducts.map((product, index) => (
           <motion.div
             key={product.id}
             initial={{ opacity: 0, y: 20 }}
@@ -28,7 +30,10 @@ export default function RelatedProducts({ products }: RelatedProductsProps) {
               delay: index * 0.1,
             }}
           >
-            <ProductCard product={product} />
+            <ProductCard 
+              addToCart={presenter.handleAddToCart} 
+              product={product} 
+            />
           </motion.div>
         ))}
       </div>

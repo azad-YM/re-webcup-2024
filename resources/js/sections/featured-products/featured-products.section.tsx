@@ -35,7 +35,7 @@ export default function FeaturedProductsSection() {
           <h2 className="text-2xl font-bold text-gray-900">Offres Spéciales</h2>
         </div>
         <ProductCarousel 
-          addToCard={presenter.addToCart}
+          addToCard={presenter.handleAddToCart}
           products={presenter.promotionProducts} 
         />
       </motion.section>
@@ -54,7 +54,7 @@ export default function FeaturedProductsSection() {
         </div>
         <ProductCarousel 
           products={presenter.powerfulProducts} 
-          addToCard={presenter.addToCart}
+          addToCard={presenter.handleAddToCart}
         />
       </motion.section>
 

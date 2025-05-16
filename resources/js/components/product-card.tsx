@@ -24,9 +24,6 @@ export default function ProductCard({ product, addToCart }: ProductCardProps) {
   const onAddToCart = (e: React.MouseEvent) => {
     e.preventDefault() // Empêcher la navigation lors du clic sur le bouton
     addToCart(product)
-    toast("Produit ajouté au panier", {
-      description: `${product.name} a été ajouté à votre panier`,
-    })
   }
 
   const addToWishlist = (e: React.MouseEvent) => {
