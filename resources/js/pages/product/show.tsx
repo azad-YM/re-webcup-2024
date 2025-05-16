@@ -3,6 +3,7 @@ import ProductReviews from '@/components/product-reviews';
 import RelatedProducts from '@/components/related-products';
 import RootLayout from '@/layouts/app/app';
 import { products } from '@/lib/data';
+import ProductDetailSection from '@/sections/product-detail/product-detail.section';
 import { type SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 
@@ -28,8 +29,7 @@ export default function Show({productId}: {productId: number}) {
     <RootLayout>
       <main className="min-h-screen bg-gradient-to-b from-purple-50 to-white pb-16">
         <div className="container mx-auto px-4">
-          <ProductDetail product={product} />
-
+          <ProductDetailSection product={product} />
           <div className="mt-20">
             <h2 className="text-2xl font-bold text-purple-900 mb-6 flex items-center">
               <span className="relative">

@@ -11,6 +11,7 @@ import { Sparkles } from 'lucide-react';
 
 export default function Welcome() {
   const { auth } = usePage<SharedData>().props;
+
   return <RootLayout>
     <main className="min-h-screen relative overflow-hidden">
       {/* Introduction avec le livre magique animé */}
