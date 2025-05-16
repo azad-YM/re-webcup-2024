@@ -1,23 +1,15 @@
-"use client"
-
-import { useState, useEffect } from "react"
-// import { useSearchParams } from "next/navigation"
-import { motion } from "framer-motion"
-import CatalogSidebar from "@/components/catalog/catalog-sidebar"
-import CatalogProducts from "@/components/catalog/catalog-products"
-import CatalogSearch from "@/components/catalog/catalog-search"
 import { products } from "@/lib/data"
+import { useEffect, useState } from "react"
 
-// Extraire les catégories uniques
-const categories = [...new Set(products.map((product) => product.category))]
-
-// Trouver les prix min et max
-const minPrice = Math.min(...products.map((product) => product.price))
-const maxPrice = Math.max(...products.map((product) => product.price))
-
-export default function CatalogLayout({}) {
-
+export const useCatalogLayout = () => {
   const [mounted, setMounted] = useState(false)
+
+  // Extraire les catégories uniques
+  const categories = [...new Set(products.map((product) => product.category))]
+
+  // Trouver les prix min et max
+  const minPrice = Math.min(...products.map((product) => product.price))
+  const maxPrice = Math.max(...products.map((product) => product.price))
 
   // Filtres
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -53,8 +45,6 @@ export default function CatalogLayout({}) {
       setSearchQuery(search)
     }
   }, [])
-
-  if (!mounted) return null
 
   // Filtrer les produits
   const filteredProducts = products.filter((product) => {
@@ -117,57 +107,32 @@ export default function CatalogLayout({}) {
   // Obtenir les produits pour la page courante
   const currentProducts = sortedProducts.slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage)
 
-  return (
-    <div className="flex flex-col lg:flex-row gap-8">
-      {/* Sidebar avec filtres */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.5 }}
-        className="lg:w-1/4"
-      >
-        <CatalogSidebar
-          categories={categories}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          priceRange={priceRange}
-          setPriceRange={setPriceRange}
-          minPrice={minPrice}
-          maxPrice={maxPrice}
-          magicLevels={magicLevels}
-          setMagicLevels={setMagicLevels}
-          showDiscount={showDiscount}
-          setShowDiscount={setShowDiscount}
-          showNew={showNew}
-          setShowNew={setShowNew}
-        />
-      </motion.div>
+  return {
+    mounted,
+    categories,
+    minPrice,
+    maxPrice,
+    selectedCategory,
+    priceRange,
+    magicLevels,
+    showDiscount,
+    showNew,
+    searchQuery,
+    sortBy,
+    setSearchQuery,
+    setCurrentPage,
+    filteredProducts,
+    sortedProducts,
+    totalPages,
+    currentPage,
+    currentProducts,
+    setSelectedCategory,
+    setPriceRange,
+    setMagicLevels,
+    setShowDiscount,
+    setSortBy,
+    setShowNew,
 
-      {/* Contenu principal */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-        className="lg:w-3/4"
-      >
-        {/* Barre de recherche et tri */}
-        <CatalogSearch
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-          totalProducts={filteredProducts.length}
-        />
 
-        {/* Liste des produits */}
-        <CatalogProducts
-          products={currentProducts}
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-          totalProducts={filteredProducts.length}
-        />
-      </motion.div>
-    </div>
-  )
+  }
 }

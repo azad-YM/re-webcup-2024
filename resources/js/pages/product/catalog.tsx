@@ -1,10 +1,6 @@
-import CatalogLayout from '@/components/catalog/catalog-layout';
 import MagicBackground from '@/components/magic-background';
-import ProductDetail from '@/components/product-detail';
-import ProductReviews from '@/components/product-reviews';
-import RelatedProducts from '@/components/related-products';
 import RootLayout from '@/layouts/app/app';
-import { products } from '@/lib/data';
+import CatalogLayoutSection from '@/sections/catalog-layout/catalog-layout.section';
 import { type SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { Sparkles } from 'lucide-react';
@@ -34,7 +30,7 @@ export default function Catalog() {
             </p>
           </header>
 
-          <CatalogLayout />
+          <CatalogLayoutSection />
         </div>
       </main>
     </RootLayout>
