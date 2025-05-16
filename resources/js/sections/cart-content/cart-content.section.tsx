@@ -11,63 +11,21 @@ import CartSummary from "@/components/cart/cart-summary"
 import ProductCarousel from "@/components/product-carousel"
 import { products } from "@/lib/data"
 import { Link } from "@inertiajs/react"
+import { useCartContent } from "./cart-content.hook"
+import { Product } from "@/lib/types"
 
-export default function CartContent() {
-  const { items, totalItems } = useCart()
-  const [mounted, setMounted] = useState(false)
-  const [showMagicEffect, setShowMagicEffect] = useState(false)
+export default function CartContentSection() {
+  const presenter = useCartContent()
 
-  // Produits recommandés (objets de niveau de magie similaire)
-  const recommendedProducts = products
-    .filter((product) => !items.some((item) => item.product.id === product.id))
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 8)
-
-  useEffect(() => {
-    setMounted(true)
-
-    // Afficher l'effet magique après un court délai
-    const timer = setTimeout(() => {
-      setShowMagicEffect(true)
-    }, 500)
-
-    return () => clearTimeout(timer)
-  }, [])
-
-  if (!mounted) {
+  if (!presenter.mounted) {
     return null
   }
 
-  if (items.length === 0) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-8xl mx-auto bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-md text-center"
-      >
-        <div className="mb-6">
-          <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <ShoppingCart className="h-10 w-10 text-purple-500" />
-          </div>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-2">Votre panier est vide</h2>
-          <p className="text-gray-600 mb-6">Vous n'avez pas encore ajouté d'objets magiques à votre panier.</p>
-          <Button asChild className="bg-purple-600 hover:bg-purple-700">
-            <Link href="/">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Retourner au catalogue
-            </Link>
-          </Button>
-        </div>
-
-        {recommendedProducts.length > 0 && (
-          <div className="mt-12">
-            <h3 className="text-xl font-semibold text-purple-800 mb-6">Objets qui pourraient vous intéresser</h3>
-            <ProductCarousel products={recommendedProducts} />
-          </div>
-        )}
-      </motion.div>
-    )
+  if (presenter.items.length === 0) {
+    return <NotContent 
+      recommendedProducts={presenter.recommendedProducts}
+      addToCart={presenter.handleAddToCart}
+    />
   }
 
   return (
@@ -81,7 +39,7 @@ export default function CartContent() {
       >
         <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-md mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-800">Articles ({totalItems})</h2>
+            <h2 className="text-xl font-semibold text-gray-800">Articles ({presenter.totalItems})</h2>
             <Link href="/" className="text-purple-600 hover:text-purple-700 text-sm flex items-center">
               <ArrowLeft className="mr-1 h-4 w-4" />
               Continuer mes achats
@@ -93,8 +51,8 @@ export default function CartContent() {
           {/* Liste des articles */}
           <div className="space-y-6">
             <AnimatePresence initial={false}>
-              {items.map((item) => (
-                <CartItem key={item.product.id} item={item} showMagicEffect={showMagicEffect} />
+              {presenter.items.map((item) => (
+                <CartItem key={item.product.id} item={item} showMagicEffect={presenter.showMagicEffect} />
               ))}
             </AnimatePresence>
           </div>
@@ -134,7 +92,7 @@ export default function CartContent() {
           </div>
 
           {/* Avertissement pour les objets puissants */}
-          {items.some((item) => item.product.magicLevel >= 4) && (
+          {presenter.items.some((item) => item.product.magicLevel >= 4) && (
             <div className="mt-6 bg-amber-50 border border-amber-200 rounded-lg p-4">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5" />
@@ -161,7 +119,7 @@ export default function CartContent() {
       </motion.div>
 
       {/* Produits recommandés */}
-      {recommendedProducts.length > 0 && (
+      {presenter.recommendedProducts.length > 0 && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -172,9 +130,52 @@ export default function CartContent() {
             <Sparkles className="h-5 w-5 mr-2 text-amber-500" />
             Complétez votre collection
           </h3>
-          <ProductCarousel products={recommendedProducts} />
+          <ProductCarousel 
+            addToCard={presenter.handleAddToCart} 
+            products={presenter.recommendedProducts} 
+          />
         </motion.div>
       )}
     </div>
+  )
+}
+
+type Props = {
+  recommendedProducts: Product[],
+  addToCart: (product: Product, quantity?: number) => void
+}
+
+const NotContent = ({ recommendedProducts, addToCart }: Props) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-8xl mx-auto bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-md text-center"
+    >
+      <div className="mb-6">
+        <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <ShoppingCart className="h-10 w-10 text-purple-500" />
+        </div>
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">Votre panier est vide</h2>
+        <p className="text-gray-600 mb-6">Vous n'avez pas encore ajouté d'objets magiques à votre panier.</p>
+        <Button asChild className="bg-purple-600 hover:bg-purple-700">
+          <Link href="/">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Retourner au catalogue
+          </Link>
+        </Button>
+      </div>
+
+      {recommendedProducts.length > 0 && (
+        <div className="mt-12">
+          <h3 className="text-xl font-semibold text-purple-800 mb-6">Objets qui pourraient vous intéresser</h3>
+          <ProductCarousel 
+            products={recommendedProducts} 
+            addToCard={addToCart}
+          />
+        </div>
+      )}
+    </motion.div>
   )
 }

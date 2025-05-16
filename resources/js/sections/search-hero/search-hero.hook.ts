@@ -1,6 +1,6 @@
+import { useEffect, useRef, useState } from "react"
 import { products } from "@/lib/data"
 import { router } from "@inertiajs/react"
-import { ChangeEvent, useEffect, useRef, useState } from "react"
 
 export const useSearchHero = () => {
   const categories = [...new Set(products.map((product) => product.category))]

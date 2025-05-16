@@ -1,6 +1,6 @@
-import CartContent from '@/components/cart/cart-content';
 import MagicBackground from '@/components/magic-background';
 import RootLayout from '@/layouts/app/app';
+import CartContentSection from '@/sections/cart-content/cart-content.section';
 import { type SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
 import { Sparkles } from 'lucide-react';
@@ -31,7 +31,7 @@ export default function Order() {
             </p>
           </header>
 
-          <CartContent />
+          <CartContentSection />
         </div>
       </main>
     </RootLayout>
