@@ -13,13 +13,13 @@ import { Link } from "@inertiajs/react"
 import { useCart } from "./cart-provider"
 
 interface ProductCardProps {
-  product: Product
+  product: Product,
+  addToCart: (product: Product, quantity?: number) => void
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, addToCart }: ProductCardProps) {
   const [isHovered, setIsHovered] = useState(false)
-    const { addToCart } = useCart()
-  
+  // const { addToCart } = useCart()
 
   const onAddToCart = (e: React.MouseEvent) => {
     e.preventDefault() // Empêcher la navigation lors du clic sur le bouton

@@ -1,8 +1,11 @@
+import { useCart } from "@/components/cart-provider"
 import { products } from "@/lib/data"
+import { Product } from "@/lib/types"
 import { useEffect, useState } from "react"
 
 export const useFeaturedProducts = () => {
   const [mounted, setMounted] = useState(false)
+  const { addToCart } = useCart()
 
   // Sélectionner les produits en promotion
   const promotionProducts = products.filter((product) => product.discount > 0).slice(0, 8)
@@ -24,6 +27,7 @@ export const useFeaturedProducts = () => {
     mounted,
     promotionProducts,
     powerfulProducts,
-    newProducts
+    newProducts,
+    addToCart
   }
 }

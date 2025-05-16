@@ -38,13 +38,13 @@ export default function CartProvider({ children }: CartProviderProps) {
   const addToCart = (product: Product, quantity = 1) => {
     setItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.product.id === product.id)
+      console.log(existingItem, "salut")
 
       if (existingItem) {
         return prevItems.map((item) =>
           item.product.id === product.id ? { ...item, quantity: item.quantity + quantity } : item,
         )
       }
-
       return [...prevItems, { product, quantity }]
     })
   }

@@ -11,10 +11,11 @@ import { useMobile } from "@/hooks/use-mobile"
 interface ProductCarouselProps {
   products: Product[]
   title?: string
+  addToCard: (product: Product, quantity?: number) => void
   className?: string
 }
 
-export default function ProductCarousel({ products, title, className = "" }: ProductCarouselProps) {
+export default function ProductCarousel({ products, addToCard, title, className = "" }: ProductCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [width, setWidth] = useState(0)
   const carouselRef = useRef<HTMLDivElement>(null)
@@ -73,7 +74,7 @@ export default function ProductCarousel({ products, title, className = "" }: Pro
             >
               {visibleProducts.map((product) => (
                 <div key={product.id} className="h-full">
-                  <ProductCard product={product} />
+                  <ProductCard addToCart={addToCard} product={product} />
                 </div>
               ))}
             </motion.div>

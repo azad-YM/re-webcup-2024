@@ -4,21 +4,9 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { products } from "@/lib/data"
 import { useMobile } from "@/hooks/use-mobile"
 import { Product } from "@/lib/types"
 import { Link } from "@inertiajs/react"
-
-// Sélectionner les produits magiques de niveau 4 et 5
-// const magicalProducts = products
-//   .filter((product) => product.magicLevel >= 4)
-//   .map((product) => ({
-//     id: product.id,
-//     name: product.name,
-//     description: product.description,
-//     image: product.image,
-//     magicLevel: product.magicLevel,
-//   }))
 
 export default function MagicCarousel({products}: {products: Product[]}) {
   const [currentIndex, setCurrentIndex] = useState(0)

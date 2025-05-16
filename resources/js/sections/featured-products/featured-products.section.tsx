@@ -1,9 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Sparkles } from "lucide-react"
-import { products } from "@/lib/data"
 import ProductCarousel from "@/components/product-carousel"
 import MagicCarousel from "@/components/magic-carousel"
 import { useFeaturedProducts } from "./featured-products.hook"
@@ -36,7 +34,10 @@ export default function FeaturedProductsSection() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900">Offres Spéciales</h2>
         </div>
-        <ProductCarousel products={presenter.promotionProducts} />
+        <ProductCarousel 
+          addToCard={presenter.addToCart}
+          products={presenter.promotionProducts} 
+        />
       </motion.section>
 
       {/* Objets puissants */}
@@ -51,10 +52,13 @@ export default function FeaturedProductsSection() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900">Objets Puissants</h2>
         </div>
-        <ProductCarousel products={presenter.powerfulProducts} />
+        <ProductCarousel 
+          products={presenter.powerfulProducts} 
+          addToCard={presenter.addToCart}
+        />
       </motion.section>
 
-      {/* Nouveautés */}      
+      {/* Nouveautés */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
