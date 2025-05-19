@@ -5,18 +5,20 @@ import { ShoppingCart, Menu, X, User, Heart, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
-import { Link } from "@inertiajs/react"
+import { Link, usePage } from "@inertiajs/react"
 import { useCart } from "./cart-provider"
+import { UserDropdown } from "./user-dropdown"
+import { SharedData } from "@/types"
 
 export default function Navbar() {
+  const { auth } = usePage<SharedData>().props;
+  console.log(auth, "auth")
   const [isOpen, setIsOpen] = useState(false)
   const { totalItems } = useCart()
 
   const navItems = [
     { name: "Accueil", href: "/" },
     { name: "Catalogue", href: "/catalogue" },
-    // { name: "Catégories", href: "/categories" },
-    // { name: "Nouveautés", href: "/nouveautes" },
     // { name: "À propos", href: "/a-propos" },
     { name: "Contact", href: "/contact" },
   ]
@@ -53,9 +55,7 @@ export default function Navbar() {
                 )}
               </Link>
             </Button>
-            <Button variant="ghost" size="icon" className="hidden md:flex">
-              <User className="h-5 w-5" />
-            </Button>
+            <UserDropdown isLoggedIn={auth.user !== null} />
 
             {/* Menu mobile */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
